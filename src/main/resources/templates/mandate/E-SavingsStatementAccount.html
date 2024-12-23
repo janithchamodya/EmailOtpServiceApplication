@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>e- Savings Account Mandate</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 690px;
+            background-color: white;
+            margin-top: 5px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 2px;
+            padding-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+            margin-bottom: 8px;
+            display: flex !important;
+            align-items: center;
+        }
+
+
+        .form-control {
+            height: calc(1em + 0.75rem + 2px) !important;
+            font-size: 12px;
+        }
+
+        .form-control-input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .form-section {
+            padding: 4px;
+            border: 1px solid #ced4da;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-section h4 {
+            font-weight: bold;
+            margin-bottom: 8px;
+            margin-top: 0;
+            background-color: #d9d9d9;
+            padding: 4px;
+            text-align: left;
+            color: #708090;
+        }
+
+
+        .label {
+            font-size: 12px;
+            margin-bottom: 4px;
+            color: #708090;
+            min-width: 150px;
+            margin-right: 10px;
+        }
+
+
+        .footer-text {
+          color: #6c757d;
+          margin-top: 10px;
+          text-align: center;
+          font-size: 12px;
+        }
+
+        .footer-text {
+          text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <table>
+            <tr>
+                <td style="width:130px;">
+                    <img src="data:image/png;base64,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" width="100px;" alt="logo"/>
+                </td>
+                <td>
+                    <h3>
+                        <b>E-Savings Account Mandate</b>
+                    </h3>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <div class="form-row" style="padding: 3px;">
+        <table>
+            <tr>
+                <td style="width:150px;">
+                    <label class="label">Date</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${date}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width:150px;">
+                    <label class="label">Existing A/C No</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${existingAccount}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width:150px;">
+                    <label class="label">CIF</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${cif}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="form-section" style="color: #708090;">
+        <div>
+            <h4>Basic Details</h4>
+        </div>
+
+        <table>
+            <tr>
+                <td style="width: 200px;">
+                    <label class="label">Title</label>
+                </td>
+                <td style="width: 20px;"></td>
+                <td style="width: 200px;">
+                    <label class="label">Initials</label>
+                </td>
+                <td style="width: 20px;"></td>
+                <td style="width: 200px;">
+                    <label class="label">Last Name/Surname</label>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${title}" />
+                </td>
+
+                <td style="width: 20px;"></td>
+
+                <td style="width: 200px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${initials}" />
+                </td>
+
+                <td style="width: 20px;"></td>
+
+                <td style="width: 200px; margin-right: 10px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${last_name}" />
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 650px;" colspan="5">
+                    <label class="label">Name denoted by initials</label>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 650px;" colspan="5">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 650px;" th:value="${name}" />
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 200px;">
+                    <label class="label">ID Number</label>
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 200px;">
+                    <label class="label">Date Of Birth</label>
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 200px;">
+                    <label class="label">Marital Status</label>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 200px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${id_number}" />
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 200px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${date_of_birth}" />
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 200px; margin-right: 10px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 200px;" th:value="${marital_status}" />
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="form-section" style="color: #708090;">
+        <div>
+            <h4>Contact Details</h4>
+        </div>
+
+
+        <table>
+            <tr>
+                <td style="width: 100px;">
+                    <label class="label">Address:<br/><i>Line 1</i></label>
+                </td>
+                <td style="width: 240px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 240px;" th:value="${address_01}" />
+                </td>
+
+                <td style="width: 20px;"></td>
+
+                <td style="width: 100px;">
+                    <label class="label">Address:<br/><i>Line 2</i></label>
+                </td>
+                <td style="width: 240px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 240px;" th:value="${address_02}" />
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 100px;">
+                    <label class="label">Address:<br/><i>Line 3</i></label>
+                </td>
+                <td style="width: 240px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 240px;" th:value="${address_03}" />
+                </td>
+
+                <td style="width: 20px;"></td>
+
+                <td style="width: 100px;">
+                    <label class="label">City :</label>
+                </td>
+                <td style="width: 240px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 240px;" th:value="${city}" />
+                </td>
+            </tr>
+
+
+            <tr>
+                <td style="width: 100px;">
+                    <label class="label">Telephone:</label>
+                </td>
+                <td style="width: 240px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 240px;" th:value="${telephone}" />
+                </td>
+
+                <td style="width: 20px;"></td>
+
+                <td style="width: 100px;">
+                    <label class="label">Mother's<br/>Maiden Name:</label>
+                </td>
+                <td style="width: 240px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 240px;" th:value="${mothers_name}" />
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 80px;">
+                    <label class="label">Email : </label>
+                </td>
+                <td style="width: 450px;" colspan="4">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 450px;" th:value="${email}" />
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+
+    <div class="form-section" style="color: #708090;">
+        <div>
+            <h4>E-Saving Account Information</h4>
+        </div>
+
+        <table>
+            <tr>
+                <td style="width: 310px;">
+                    <label class="label">Account No : </label>
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 310px;">
+                    <label class="label">Product Type : </label>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 310px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 310px;" th:value="${accountNo}" />
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 310px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 310px;" th:value="${productType}" />
+                </td>
+            </tr>
+
+
+            <tr>
+                <td style="width: 310px;">
+                    <label class="label">Product Code : </label>
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 310px;">
+                    <label class="label">Nickname :</label>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 310px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 310px;" th:value="${productCode}" />
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 310px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 310px;" th:value="${nickName}" />
+                </td>
+            </tr>
+
+
+            <tr>
+                <td style="width: 310px;">
+                    <label class="label">A/C Opening Date : </label>
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 310px;">
+                    <label class="label">Purpose for Opening Account : </label>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 310px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 310px;" th:value="${openingDate}" />
+                </td>
+                <td style="width: 25px;"></td>
+                <td style="width: 310px;">
+                    <input type="text" class="form-control form-control-input" style="font-size: 12px; width: 310px;" th:value="${purposeOfAccount}" />
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="footer" style="font: 12px">
+
+        <p class="footer-text text-align-left">
+            This is an auto-generated e-Savings Mandate based on the existing
+            account information as of DD/MM/YY. The terms and conditions related
+            to the account have been digitally accepted by the customer.
+        </p>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+<div class="container" style="padding: 32px; text-align: justify;">
+    <div style="margin: 15px;">
+
+        <div>
+            <p style="font-weight: bold;">
+                TERMS &amp; CONDITIONS – E-SAVINGS STATEMENT ACCOUNT OPENED VIA DIGITAL BANKING SERVICES OF COMMERCIAL BANK OF CEYLON PLC.
+            </p>
+        </div>
+
+        <p style="font-size: 12px">
+            The Account holder hereby agrees that he/she shall be bound by all the
+            terms and conditions mentioned in this document relating to e-Savings
+            Statement account opened via Digital Banking services in his/her name.
+        </p>
+        <ol style="font-size: 12px">
+            <li>
+                The account holder agrees and confirms that subsequent to opening in
+                his/her name, in absolute compliance with the selections made when
+                submitting the account opening request, he/she assumes sole authority
+                for operating same. Any requests thereafter may be transmitted to the
+                Bank by the account holder from time to time through secured messages
+                via ComBank Digital platform, upon which the Bank is hereby fully
+                authorized to act.
+            </li>
+            <br />
+            <li>
+                E-Savings Statement account will be opened in the sole name of the
+                owner of the ComBank Digital service via which the request is
+                submitted, and under no circumstances will any other parties be joined
+                to such accounts at any time thereafter.
+            </li>
+            <br />
+            <li>
+                Only Sri Lankan citizens residing in Sri Lanka could open the
+                e-Savings statement account.
+            </li>
+            <br />
+            <li>
+                The Bank is under no obligation to obtain a physical mandate for the
+                opening of e-Savings statement account via the ‘ComBank Digital’
+                platform, further that the account holder consents for the Bank to use
+                the updated information provided to the mandate of the existing
+                primary account.
+            </li>
+            <br />
+            <li>
+                The e-Savings statement account will be opened in ’Inactive’ status
+                and will not be listed in the ComBank Digital ‘My Portfolio’ dashboard
+                until the Bank’s internal verification process is completed.
+                Verification will be completed within 3 working days from the request
+                submission, and the account holder will be notified of the outcome via
+                email.
+            </li>
+            <br />
+            <li>
+                The Bank may at its sole discretion accept or reject the opening of
+                any e-Savings statement account via this service, If the account is
+                rejected the Bank will communicate reason for rejection.
+            </li>
+            <br />
+
+            <li>
+                All Terms and Conditions applicable to the respective Savings product
+                of the Bank will also apply to e-Savings Statement account created
+                through ‘ComBank Digital’.
+            </li>
+            <br />
+            <li>
+                Upon activation of e-Savings statement account, account holder should
+                make arrangements to fund Rs. 1,000/- the minimum initial deposit
+                requirement for the account, within 14 calendar days after the
+                activation of the account. The Bank reserves the right to close
+                accounts which are not funded as required.
+            </li>
+
+            <br />
+
+            <li>
+                The Bank will inform about the required documents if the documents are
+                not available in existing accounts via secured message, account holder
+                should submit the required documents within 21 calendar days as
+                informed by the Bank.
+            </li>
+            <br />
+            <li>
+                The account holder agrees that the Bank shall at its discretion close
+                the e-Savings statement account opened via this service if the account
+                holder fails to make initial deposit and operate such account within
+                14 Days after opening same.
+            </li>
+            <br />
+            <li>
+                The customer hereby agrees that the operating instructions, signature
+                and all other terms available in the Primary account mandate and shall
+                continue to be valid and effective for this e-Savings statement
+                account opened via the ComBank Digital platform, and the said mandate,
+                signature, KYC information and other documents submitted to the Bank
+                for the primary account shall be considered as part and parcel of this
+                e-Savings Statement account.
+            </li>
+            <li>
+                The customer also agrees that by accepting these terms and conditions
+                and validation of request by way of an OTP generated to his/her
+                registered mobile number, it is deemed that he/she has given the
+                consent for the Bank to open an e-Savings Statement account with the
+                Bank.
+            </li>
+        </ol>
+
+    </div>
+
+
+    <div style="margin: 15px;">
+        <div class="topic">
+            <p>
+                <b> Permitted Transactions &amp; Usage of e-Savings statement account </b>
+            </p>
+        </div>
+
+        <ol style="font-size: 12px">
+            <li>
+                Interest will be calculated on daily basis and credited monthly, at
+                the rate determined by the Bank at its discretion without prior notice
+                to the customer. Interest will not be credited if the balance in the
+                account is less than the required minimum balance stipulated by the
+                Bank.
+            </li>
+            <br />
+
+            <li>
+                A service charge will be debited from the account if the minimum
+                balance stipulated by the Bank is not maintained.
+            </li>
+            <br />
+            <li>
+                Over the counter transactions will NOT be allowed from the e-Savings
+                statement accounts. Transactions are permitted only through digital
+                and electronic platforms. (Digital Banking transfers, ATM/CRM/CEFTS
+                etc.).
+            </li>
+            <br />
+            <li>
+                e-Savings statement account may be linked to an existing ATM/ Debit
+                card in the name of the account holder by submitting a request via the
+                ‘Message to Bank’ function in ComBank Digital. In case a new/separate
+                ATM/Debit card is required, you may request same by visiting any
+                Commercial Bank branch.
+            </li>
+            <br />
+            <li>
+                Cheques/drafts which are not drawn favoring the Bank will be accepted
+                to the credit of the e-Savings Statement account only at the
+                discretion of the Bank.
+            </li>
+            <br />
+
+            <li>
+                e-Savings statement account may be closed upon receipt of verified
+                instructions from the account holder, and account holder should bear
+                the relevant account closing charges if any. Provided however, the
+                account holder shall not close the primary account/s opened by him/her
+                with the Bank for as long as any e-Savings statement account opened
+                via this service remains in operation. In the event the primary
+                account is closed due to any unavoidable circumstances, where any
+                e-Savings statement account remain in operation, the account holder
+                hereby undertakes to provide a fresh mandate as and when requested by
+                the Bank.
+            </li>
+            <br />
+            <li>
+                Nominations for e-Savings statement account can be made only by
+                physically submitting a duly signed nomination form to the account
+                holding branch.
+            </li>
+
+            <br />
+            <li>
+                The Account holder grants his/her consent to the Bank to verify the
+                genuineness of his/her National Identity Card from the Department for
+                Registration of Persons.
+            </li>
+            <li>
+                The accountholder agrees that the Bank at its sole discretion shall
+                permit operations of e-Savings statement account, and that the Bank
+                shall have the right at any time to freeze the e-Savings statement
+                account if operations are not conducted in compliance with the
+                customers’ KYC information available with the Bank.
+            </li>
+        </ol>
+
+    </div>
+
+    <div style="margin: 15px;">
+        <div class="topic">
+            <p>
+                <b>
+                    GENERAL TERMS &amp; CONDITIONS - e-SAVINGS STATEMENT ACCOUNT OPENED VIA DIGITAL BANKING SERVICES OF COMMERCIAL BANK OF CEYLON PLC.
+                </b>
+            </p>
+        </div>
+
+        <p style="font-size: 12px">
+            In consideration of Commercial Bank of Ceylon PLC (Bank) pursuant to my
+            request, making available to me facilities, the account holder agrees to
+            be bound by the following Terms and Conditions. Unless otherwise
+            specifically stated, ‘facilities’ would mean and include eSavings
+            Statement Accounts, DEBIT/ATM Card, Online Banking, Mobile Banking,
+            e-Statement, SMS Alert, e-Passbook facilities (where applicable) offered
+            by the Bank to the customer.
+        </p>
+
+        <ol class="color: #6c757d;" style="font-size: 12px">
+            <li>
+                To restrict the use of facilities exclusively to the account
+                holder/registered user.
+            </li>
+            <br />
+            <li>
+                To acknowledge and confirm that Terms and Conditions governing
+                ’Digital Banking’ activities and ‘ATM/Debit Card’ usage already agreed
+                are also applicable for new eSavings accounts.
+            </li>
+            <br />
+            <li>
+                At no time and under no circumstances to disclose to any person the
+                Personal Identifi¬cation Number (PIN No.)/Password/User ID allotted to
+                me for accessing the facilities extended to me and to treat such as
+                strictly con¬fidential.
+            </li>
+            <br />
+            <li>
+                To immediately notify the Bank of the loss or theft of Cards and to
+                report to the Bank upon becoming aware that any user ID/Password/PIN
+                has fallen into the hands of any unauthorized party.
+            </li>
+            <br />
+            <li>
+                To accept full responsibility for all transactions processed from the
+                use of facilities extended to me, except any transactions occurring
+                after the Bank shall have con¬firmed to me that it has received notice
+                of unauthorized acquisition of the PIN No./Password/User ID.
+            </li>
+            <br />
+            <li>
+                To accept the Bank’s records of transactions as conclusive and binding
+                for all purposes.
+            </li>
+            <br />
+            <li>
+                Not to hold the Bank liable, responsible or accountable in any way
+                whatsoever for any loss or damage howsoever arising caused by any
+                malfunction or failure of any facilities including insufficiency of
+                funds in the ATM.
+            </li>
+            <br />
+            <li>
+                That the Bank is not bound to carry out the instructions received, if
+                the Bank at its sole discretion believes that such transactions do not
+                originate from the account holder.
+            </li>
+            <br />
+
+            <li>
+                Notwithstanding and without prejudice to the generality of the
+                provisions of (07) above the use of facilities shall be at my sole
+                risk and I assume any and all risks incidental to or arising out of
+                the use of the Card/s.
+            </li>
+            <br />
+            <li>
+                To inform the Bank immediately in the event of changing the mobile
+                phone and/or terminating the mobile connection registered for the
+                Mobile Banking/e-Passbook facility.
+            </li>
+
+            <br />
+            <li>
+                I hereby give my consent to the Bank to store and retain this request,
+                all information and data provided by me in this request and/or any
+                mandates in electronic form and hereby authorize the Bank to submit
+                same as evidence to law enforcement authorities including judicial
+                courts if and when required.
+            </li>
+            <br />
+            <li>
+                In addition to the Terms and Conditions specified herein, all rules
+                and regulations governing operation of Savings Accounts shall be
+                applicable to facilities relating to such accounts.
+            </li>
+            <br />
+            <li>
+                The Bank reserves the right to amend these Terms and Conditions.
+            </li>
+            <br />
+            <li>
+                I agree and certify that the mobile number/email and any other
+                identification details submitted to the Banks registered under the
+                authorized SMS recipient and that I undertake to inform the Bank
+                promptly of any change of ownership or discontinuation of the
+                aforesaid mobile connection or the loss of the media device.
+            </li>
+            <br />
+            <li>
+                The account holder acknowledges, represents and warrants that he/she;
+                <ul>
+                    <li>
+                        a. Is the sole user and exclusive owner of the mobile phone to
+                        which the ONE TIME PASSWORD(OTP) is received.
+                    </li>
+                    <li>
+                        b. is entirely responsible for the safekeeping/secrecy of the OTP
+                    </li>
+                </ul>
+            </li>
+            <br />
+            <li>
+                The customer undertakes to hold the Bank harmless and indemnify the
+                Bank from any loss or liability or damage incurred by the Bank as a
+                result of any misuse of the OTP by any other person other than the
+                user.
+            </li>
+            <br />
+            <li>
+                I do hereby agree and irrevocably hold the Bank indemnified and saved
+                harmless from and against any losses, charges, suits, claims, expenses
+                and damages that the Bank shall or may be caused, sustained, incurred,
+                or suffered by reason of the Bank permitting me the creation of my own
+                User ID's and Password's as aforesaid, acting on my instructions or
+                requests made or transmitted to you electronically and/or acting upon
+                advises, requests, instructions forwarded by me in the said manner
+                without my valid physically placed signature/s appearing on such
+                instructions and/or by accepting electronic messages so exchanged via
+                addresses provided by me or through any other electronic means and
+                agree that I do provide data, information, instructions and messages
+                through electronic means at my own risk, without holding the Bank
+                liable or accountable for or on account of any loss and/or
+                misdirection of data in transit electronically with or without my
+                knowledge or authority and for processing and effecting transactions
+                which are originated through the User IDs and passwords created by me.
+            </li>
+            <br />
+            <li>
+                I confirm and certify to the Bank that all data transmitted to the
+                Bank is correct, complete, conclusive and binding on me and shall let
+                the Bank know immediately about any errors, discrepancies or omissions
+                which may have occurred inadvertently or otherwise.
+            </li>
+            <br />
+            <li>
+                I do hereby authorize the Bank to debit my said accounts with the
+                amount of any transaction made by the use of the facilities extended
+                to me with or without my knowledge or any further authority by me, and
+                to debit my said accounts with all charges relating to transactions
+                effected by me through facilities extended to me, and also with any
+                other liabilities inclusive of legal fees or other statutory charges,
+                if any.
+            </li>
+            <br />
+            <li>
+                I agree and acknowledge that the Bank may at its discretion, stop,
+                cancel, withdraw or refuse to renew/extend or grant or accommodate any
+                request made by me in relation to any of the accounts and/or
+                privileges opened or granted or continued in my names or extended
+                towards me for valid reasons in the usual course of its business or
+                otherwise, even without prior notice to me in exercising any or all
+                rights and authorities conferred by me herein.
+            </li>
+            <br />
+            <li>
+                I do hereby authorize the Bank, at its discretion to record by
+                whatever means the transactions which effect via facilities extended
+                to me, that such records may be used by the Bank for the purpose of,
+                amongst other things, establishing or verifying that a particular
+                transaction was effected through the use of User ID and Passwords and
+                confirm that I shall accept the Bank's records and statements of all
+                transactions processed by the use of the ComBank Digital service as
+                conclusive and binding on me for all purposes.
+            </li>
+            <br />
+            <li>
+                I certify that I am aware of my responsibility to obtain and maintain
+                any equipment which may be necessary for using ComBank Digital service
+                in proper working condition and with adequate safeguards against
+                malicious threats to such equipment or to ComBank Digital service and
+                undertake not to access ComBank Digital service using defective or
+                insecure equipment.
+            </li>
+            <br />
+            <li>
+                I hereby undertake to maintain adequate measures to safeguard the
+                ComBank Digital service from disclosure to, and from access or use by,
+                anyone who is not authorized to do so and shall inform the Bank
+                immediately upon becoming aware of any unauthorized use of the User
+                ID/s and Password's created by me by any person/s other than me.
+            </li>
+            <br />
+
+            <li>
+                I acknowledge that ComBank Digital service will remain the property of
+                the Bank at all times I as the accountholder, shall neither obtain any
+                rights in Bank's property nor copy any of the information, techniques,
+                data or designs relating to same.
+            </li>
+        </ol>
+        <p style="font-size: 12px">
+            I have read and understood the foregoing and agree to be bound by the
+            above Terms and Conditions.
+        </p>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>
